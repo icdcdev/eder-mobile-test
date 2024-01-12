@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -15,11 +17,13 @@ import com.example.ordersapplication.databinding.RowOrderDataBinding;
 import com.example.ordersapplication.model.IEventItem;
 import com.example.ordersapplication.model.Order;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
+public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> implements Filterable {
 
     private List<Order> orderList;
+    private List<Order> filteredList;
     private IEventItem iEventItem;
 
     public void setiEventItem(IEventItem iEventItem) {
@@ -35,7 +39,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     @Override
     public void onBindViewHolder(@NonNull OrderViewHolder holder, int position) {
-        Order order = orderList.get(position);
+        Order order = filteredList.get(position);
         holder.rowOrderDataBinding.setData(order);
         changeStatusStyle(holder,order);
         holder.rowOrderDataBinding.getRoot().setOnClickListener(view -> {
@@ -66,13 +70,46 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     @Override
     public int getItemCount() {
-        return orderList == null ? 0 : orderList.size();
+        return filteredList == null ? 0 : filteredList.size();
     }
 
     @SuppressLint("NotifyDataSetChanged")
     public void addAll(List<Order> orderList) {
         this.orderList = orderList;
+        this.filteredList = orderList;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charSequenceString = charSequence.toString();
+                if (charSequenceString.isEmpty()) {
+                    filteredList = orderList;
+                } else {
+                    List<Order> filterList = new ArrayList<>();
+                    for (Order item : orderList) {
+                        if (item.getOrderId().toLowerCase().contains(charSequenceString.toLowerCase())) {
+                            filterList.add(item);
+                        }
+                        filteredList = filterList;
+                    }
+
+                }
+                FilterResults results = new FilterResults();
+                results.values = filteredList;
+                return results;
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredList = (List<Order>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class OrderViewHolder extends RecyclerView.ViewHolder {
