@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">OrdersApplication</string>
+    <string name="orden_o_folio">Orden o folio</string>
+    <string name="date_fefault">01-01-2024</string>
+    <string name="asignadas">ASIGNADAS</string>
+    <string name="no_asignadas">NO ASIGNADAS</string>
 </resources>

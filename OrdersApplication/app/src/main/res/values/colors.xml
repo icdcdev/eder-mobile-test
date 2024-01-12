@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="button_color">#3b32a3</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="aqua">#00FFFF</color>
+    <color name="not_assigned_status_color">#03caec</color>
+    <color name="black_color">#271b4c</color>
+    <color name="uninitiated_status_color">#f40736</color>
+    <color name="detained_status_color">#fabf1c</color>
+    <color name="back_color">#f8f8f8</color>
+    <color name="hint_search_color">#b3b9bc</color>
+    <color name="gray_divider_color">#e9eaea</color>
+    <color name="default_status_color">#dce3ec</color>
 </resources>

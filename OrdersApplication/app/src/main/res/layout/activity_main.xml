@@ -1,53 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/back_color"
         tools:context=".view.activities.MainActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_toolbar"
-            android:background="@color/white"
-            android:elevation="6dp" />
         <LinearLayout
+            android:id="@+id/lnControl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/toolbar"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/coordinatorToolbar"
+            android:background="@color/white"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"/>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabTypeOrder"
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/svOrder"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/white" />
+                app:queryHint="@string/orden_o_folio"
+                app:iconifiedByDefault="false"
+                app:searchIcon="@null"
+                app:queryBackground="@null"
+                android:layout_weight="1" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvListOrder"
-                android:layout_width="match_parent"
-                tools:listitem="@layout/row_order_data"
-                android:layout_marginTop="@dimen/margin_top_card"
-                android:layout_height="match_parent" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="@dimen/icon_size"
+                android:layout_gravity="center"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/baseline_search_24"
+                app:tint="@color/black"/>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/gray_divider_color" />
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.TextButton"
+                android:id="@+id/btnFilterOrder"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/date_fefault"
+                android:textColor="@color/black"
+                app:iconGravity="end"
+                app:iconTint="@color/black"
+                app:icon="@drawable/baseline_calendar_today_24"
+                android:layout_weight="1"/>
         </LinearLayout>
 
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinatorToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:background="@color/white"
+                android:gravity="center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    app:srcCompat="@drawable/ic_notificacion" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/logo_sizew"
+                    android:layout_gravity="center"
+                    app:srcCompat="@mipmap/ic_logo" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/icon_size"
+                    android:layout_height="@dimen/icon_size"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/_16dp"
+                    app:srcCompat="@drawable/ic_informacion" />
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray_divider_color"
+                android:layout_gravity="bottom"/>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvListOrder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tabTypeOrder"
+            android:layout_marginTop="@dimen/margin_top_card" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floating_action_button"
+            android:id="@+id/fbSignOut"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_alignParentBottom="true"
-            app:fabSize="normal"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
             android:layout_margin="@dimen/_16dp"
-            app:srcCompat="@drawable/baseline_access_alarm_24"/>
+            app:backgroundTint="@color/button_color"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/baseline_access_alarm_24"
+            android:contentDescription="@string/app_name"
+            app:tint="@color/white" />
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabTypeOrder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lnControl"
+            android:elevation="4dp"
+            android:background="@color/white"
+            app:tabMode="fixed"
+            app:tabGravity="fill"
+            app:tabSelectedTextColor="@color/black_color"
+            app:tabTextColor="@color/hint_search_color"
+            app:tabIndicatorColor="@color/black"
+            android:paddingBottom="8dp"
+            app:tabIndicatorFullWidth="true"/>
     </RelativeLayout>
 </layout>
